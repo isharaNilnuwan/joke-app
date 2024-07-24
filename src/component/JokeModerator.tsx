@@ -1,26 +1,16 @@
+import { Joke, JokeType } from '@/types/types';
 import React, { useState, ChangeEvent } from 'react';
 
-interface Joke {
-  id: number;
-  content: string;
-  type: string;
-}
-
-interface JokeType {
-    jokeType: string | number | readonly string[] | undefined;
-    id: number;
-  }
 
 interface JokeEditorProps {
   joke: Joke;
   jokeTypes: JokeType[]
   onSave: (joke: Joke) => void;
   onReject: (jokeId: number) => void;
+  onAccept: (joke: Joke) => void;
 }
 
-const jokeTypes = ["Pun", "Knock-Knock", "One-Liner", "Dad Joke"];
-
-const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReject }) => {
+const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReject, onAccept }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedJoke, setEditedJoke] = useState(joke.content);
   const [selectedType, setSelectedType] = useState(joke.type);
@@ -30,17 +20,17 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
   };
 
   const handleSaveClick = () => {
-    onSave({
-      ...joke,
-      content: editedJoke,
-      type: selectedType,
-    });
+    onSave(getUpdatedJokeObject());
     setIsEditing(false);
   };
 
   const handleRejectClick = () => {
     onReject(joke.id);
   };
+
+  const handleAcceptClick = () => {
+    onAccept(getUpdatedJokeObject(true))
+  }  
 
   const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedType(e.target.value);
@@ -49,6 +39,15 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
   const handleJokeChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setEditedJoke(e.target.value);
   };
+
+  const getUpdatedJokeObject = (accept?: boolean) => {
+    return {
+        ...joke,
+        content: editedJoke,
+        type: selectedType,
+        approved: accept || joke.approved
+      }
+  }
 
   return (
     <div style={styles.container}>
@@ -60,8 +59,8 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
           style={styles.dropdown}
         >
           {jokeTypes.map((typeObj, index) => (
-            <option key={index} value={typeObj.jokeType}>
-              {typeObj.jokeType}
+            <option key={index} value={typeObj.type}>
+              {typeObj.type}
             </option>
           ))}
         </select>
@@ -82,7 +81,10 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
             Edit
           </button>
         )}
-        <button onClick={handleRejectClick} style={styles.button}>
+        <button disabled={isEditing} onClick={handleAcceptClick} style={styles.button}>
+          Accept
+        </button>
+        <button disabled={isEditing} onClick={handleRejectClick} style={styles.button}>
           Reject
         </button>
       </div>
@@ -108,9 +110,9 @@ const styles: {
       boxSizing: 'border-box',
     },
     dropdownContainer: {
-      position: 'absolute',
-      top: '10px',
-      left: '10px',
+    //   position: 'absolute',
+    //   top: '10px',
+    //   left: '10px',
     },
     dropdown: {
       padding: '5px',
@@ -125,7 +127,7 @@ const styles: {
     },
     buttonBar: {
       position: 'absolute',
-      bottom: '10px',
+      bottom: '6px',
       right: '10px',
     },
     button: {

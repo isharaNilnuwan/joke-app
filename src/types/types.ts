@@ -6,5 +6,6 @@ export interface Joke {
 }
 
 export interface JokeType {
+    id: string;
   type: string;
 }

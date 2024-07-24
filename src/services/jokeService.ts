@@ -19,6 +19,7 @@ export const fetchNewJokes = async (): Promise<Joke[]> => {
   return response.data;
 };
 
+//save public jokes
 export const submitJoke = async (
   joke: Omit<Joke, "id" | "approved">
 ): Promise<Joke> => {
@@ -27,8 +28,7 @@ export const submitJoke = async (
 };
 
 //edit joke data
-export const moderateJoke = async (
-  id: number,
+export const updateJoke = async (
   joke: Partial<Joke>
 ): Promise<Joke> => {
   const response = await axios.put(
@@ -41,11 +41,11 @@ export const moderateJoke = async (
   return response.data;
 };
 
+//save moderated jokes to deliver service
 export const acceptJoke = async (
-  id: number,
   joke: Partial<Joke>
 ): Promise<Joke> => {
-  const response = await axios.put(`${MODERATE_API_URL}/moderate/${id}`, joke, {
+  const response = await axios.put(`${MODERATE_API_URL}/moderate/acceptJoke`, joke, {
     headers: getAuthorizationHeader(),
   });
   return response.data;
@@ -66,5 +66,20 @@ export const getJokeTypes = async (): Promise<JokeType[]> => {
   const response = await axios.get(
     `${MODERATE_API_URL}/moderate/getTypes`
   );
-  return response.data;
+  return jokeTypemapper(response.data);
 };
+
+
+const jokeTypemapper = (data: { array: any[] }): JokeType[] => {
+  const mapper: JokeType[] = [];
+  data.forEach((obj) => {
+    mapper.push({
+      id: obj.id,
+      type: obj.jokeType,
+    });
+  });
+
+  return mapper;
+}
+
+

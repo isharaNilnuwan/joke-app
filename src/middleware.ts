@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { authRoutes, protectedRoutes } from "./router/router";
 
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get("currentUser")?.value;    
+  const currentUser = request.cookies.get("currentUser")?.value;   
   if (
     protectedRoutes.includes(request.nextUrl.pathname) &&
     (!currentUser || Date.now() > JSON.parse(currentUser).expiredAt)

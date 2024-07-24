@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import JokeList from '@/component/JokeList';
 import JokeEditor from '@/component/JokeModerator';
-import { getJokeTypes } from '@/services/jokeService';
-import { JokeType } from '@/types/types';
+import { acceptJoke, fetchNewJokes, getJokeTypes, updateJoke } from '@/services/jokeService';
+import { Joke, JokeType } from '@/types/types';
 
 const ModeratePage: React.FC = () => {
 
   const [jokeTypes, setJokeTypes] = useState<JokeType[]>([]);
+  const [jokes, setJokes] = useState<Joke[]>([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetchJokeTypes = async () => {
       try {
         const response = await getJokeTypes();
@@ -19,30 +20,50 @@ const ModeratePage: React.FC = () => {
       }
     };
 
+    const loadJokes = async () => {
+      try {
+        const jokes = await fetchNewJokes();
+        console.group("#$ jokes", jokes)
+        setJokes(jokes);
+      } catch {
+
+      }
+
+    };
+
     fetchJokeTypes();
+    loadJokes();
   }, [])
-  const joke = {
-    id:12,
-    content:"2",
-    type: "12"
+
+  const onReject = () => {
+
   }
-  const onReject = ()=> {
-    
+
+  const onAccept = (joke: any)=> {
+    acceptJoke(joke)
   }
 
 
-  const onSave =() => {
+  const onSave = useCallback((joke: any) => {
+    console.log("#$ onsave", joke)
+    updateJoke(joke);
+  }, [])
 
-  }
   return (
     <div>
       <h1>Moderater page</h1>
-      <JokeList />
-      <JokeEditor 
-        jokeTypes={jokeTypes}
-        joke={joke}
-        onSave={onSave}
-        onReject={onReject} />
+      <ul>
+        {jokes.map((joke, index) => (
+          <JokeEditor
+            key={index}
+            jokeTypes={jokeTypes}
+            joke={joke}
+            onSave={onSave}
+            onReject={onReject} 
+            onAccept={onAccept}/>
+        ))}
+      </ul>
+
     </div>
   );
 };
