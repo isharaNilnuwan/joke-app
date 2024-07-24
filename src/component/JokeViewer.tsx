@@ -9,7 +9,7 @@ const JokeViewer = ({ jokeTypes, jokes }) => {
     const [randomJoke, setRandomJoke] = useState(undefined);
 
     useEffect(() => {
-        if (jokeTypes.length > 0 && jokes.length > 0) {
+        if (jokeTypes?.length >0 && jokes?.length > 0) {
             const filteredJokes = filterByType(jokeTypes[0].type);
             setFilteredJokes(filteredJokes);
         }
