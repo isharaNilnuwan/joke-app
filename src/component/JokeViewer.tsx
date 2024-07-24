@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { fetchNewJokes } from '../services/jokeService';
 import { Joke } from '@/types/types'; 
 
-const JokeList: React.FC = () => {
+const JokeSubmitter: React.FC = () => {
   const [jokes, setJokes] = useState<Joke[]>([]);
 
   useEffect(() => {
     const loadJokes = async () => {
       const jokes = await fetchNewJokes();
       console.group("#$ jokes", jokes)
-      setJokes(jokes);
+    //   setJokes(jokes);
     };
 
     loadJokes();
@@ -26,5 +26,3 @@ const JokeList: React.FC = () => {
     </div>
   );
 };
-
-export default JokeList;

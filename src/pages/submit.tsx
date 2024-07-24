@@ -1,11 +1,11 @@
 import React from 'react';
-import JokeForm from '@/component/JokeForm';
+import JokeSubmitter from '@/component/JokeSubmitter';
 
 const SubmitPage: React.FC = () => {
   return (
     <div>
-      <h1>Submit a Joke</h1>
-      <JokeForm />
+      <h1>Submit Your Joke</h1>
+      <JokeSubmitter />
     </div>
   );
 };

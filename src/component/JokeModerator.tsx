@@ -6,7 +6,7 @@ interface JokeEditorProps {
   joke: Joke;
   jokeTypes: JokeType[]
   onSave: (joke: Joke) => void;
-  onReject: (jokeId: number) => void;
+  onReject: (jokeId: string) => void;
   onAccept: (joke: Joke) => void;
 }
 
@@ -25,7 +25,7 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
   };
 
   const handleRejectClick = () => {
-    onReject(joke.id);
+    onReject(joke._id);
   };
 
   const handleAcceptClick = () => {
