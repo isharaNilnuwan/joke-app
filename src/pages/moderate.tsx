@@ -21,7 +21,6 @@ const ModeratePage: React.FC = () => {
     const fetchJokeTypes = async () => {
       try {
         const response = await getJokeTypes();
-        console.log("#$ joke types modertr", response)
         setJokeTypes(response);
       } catch (error) {
         console.error('Error fetching joke types:', error);
@@ -58,8 +57,7 @@ const ModeratePage: React.FC = () => {
   }
 
 
-  const onSave = useCallback((joke: any) => {
-    console.log("#$ onsave", joke)
+  const onSave = useCallback((joke: any) => {    
     updateJoke(joke);
   }, [])
 

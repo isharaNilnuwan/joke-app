@@ -9,7 +9,7 @@ const JokeSubmitter: React.FC = () => {
   useEffect(() => {
     const fetchJokeTypes = async () => {
       try {
-        const response = await getJokeTypes();;
+        const response = await getJokeTypes();
         setJokeTypes(response);
         if (response.length > 0) {
           setSelectedType(response[0]);
@@ -27,16 +27,16 @@ const JokeSubmitter: React.FC = () => {
       content: joke,
       approved: false
     });
-    if (joke.trim()) {      
+    if (joke.trim()) {
       setJoke('');
-      setSelectedType(jokeTypes[0] || '');      
+      setSelectedType(jokeTypes[0] || '');
 
     }
   };
 
   return (
     <div style={containerStyle}>
-  <select
+      <select
         style={dropdownStyle}
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
@@ -58,7 +58,7 @@ const JokeSubmitter: React.FC = () => {
         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = submitButtonHoverStyle.backgroundColor)}
         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = submitButtonStyle.backgroundColor)}
         onClick={handleSubmit}
-        disabled={joke.trim().length ===0}
+        disabled={joke.trim().length === 0}
       >
         Submit
       </button>

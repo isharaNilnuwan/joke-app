@@ -5,7 +5,7 @@ import { getAuthorizationHeader } from "@/utils/getAuthorizationHeader";
 const MODERATE_API_URL =
   process.env.MODERATE_API_URL || "http://localhost:1008";
 const SUBMIT_API_URL = process.env.SUBMIT_API_URL || "http://localhost:3000";
-const DELIVER_API_URL = process.env.DELIVER_API_URL || "http://localhost:3306";
+const DELIVER_API_URL = process.env.DELIVER_API_URL || "http://localhost:8080";
 
 export const fetchJokes = async (): Promise<any> => {
   try {
@@ -14,22 +14,33 @@ export const fetchJokes = async (): Promise<any> => {
   } catch (error) {}
 };
 
+//newly submitted jokes
 export const fetchNewJokes = async (): Promise<any> => {
   try {
     const response = await axios.get(`${MODERATE_API_URL}/moderate/newJokes`, {
       headers: getAuthorizationHeader(),
     });
-    console.log("#$ new jokes", response.data);
+    return response.data;
+  } catch (error) {}
+};
+
+//accepted jokes
+export const fetchAcceptedJokes = async (): Promise<any> => {
+  try {
+    const response = await axios.get(`${DELIVER_API_URL}/joke/all`, {
+      headers: getAuthorizationHeader(),
+    });    
     return response.data;
   } catch (error) {}
 };
 
 //save public jokes
-export const submitJoke = async (
-  joke: Partial<Joke>
-): Promise<any> => {
+export const submitJoke = async (joke: Partial<Joke>): Promise<any> => {
   try {
-    const response = await axios.post(`${SUBMIT_API_URL}/submitJokes/addNewjoke`, joke);
+    const response = await axios.post(
+      `${SUBMIT_API_URL}/submitJokes/addNewjoke`,
+      joke
+    );
     return response.data;
   } catch (error) {}
 };
@@ -79,8 +90,7 @@ export const rejectJoke = async (id: string): Promise<any> => {
 };
 
 export const addJokeType = async (joketype: JokeType): Promise<any> => {
-  try {
-    console.log("#$ add joke type", joketype);
+  try {    
     const response = await axios.post(
       `${MODERATE_API_URL}/moderate/addNewType`,
       joketype,
