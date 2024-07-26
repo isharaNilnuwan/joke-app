@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Joke, JokeType } from '@/types/types';
 import React, { useState, ChangeEvent } from 'react';
 
@@ -25,7 +26,7 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
   };
 
   const handleRejectClick = () => {
-    onReject(joke._id);
+    onReject(joke?._id);
   };
 
   const handleAcceptClick = () => {
