@@ -58,7 +58,7 @@ const JokeEditor: React.FC<JokeEditorProps> = ({ joke, jokeTypes, onSave, onReje
           disabled={!isEditing}
           style={styles.dropdown}
         >
-          {jokeTypes.map((typeObj, index) => (
+          {jokeTypes && jokeTypes.map((typeObj, index) => (
             <option key={index} value={typeObj.type}>
               {typeObj.type}
             </option>
@@ -102,38 +102,79 @@ const styles: {
     button: React.CSSProperties;
   } = {
     container: {
-      position: 'relative',
-      width: '500px',
-      height: '300px',
-      border: '1px solid #ccc',
-      padding: '10px',
-      boxSizing: 'border-box',
-    },
-    dropdownContainer: {
-    //   position: 'absolute',
-    //   top: '10px',
-    //   left: '10px',
-    },
-    dropdown: {
-      padding: '5px',
-    },
-    textarea: {
-      width: '100%',
-      height: '80%',
-      padding: '10px',
-      boxSizing: 'border-box', 
-      resize: 'none',
-      border: '1px solid #ccc',
-    },
-    buttonBar: {
-      position: 'absolute',
-      bottom: '6px',
-      right: '10px',
-    },
-    button: {
-      marginLeft: '10px',
-      padding: '5px 10px',
-    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '70%',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '20px',
+    boxSizing: 'border-box',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    backgroundColor: '#f9f9f9',
+    position: 'relative', // To position child elements absolutely
+  },
+  dropdownContainer: {
+    marginBottom: '20px',
+  },
+  dropdown: {
+    width: '100%',
+    padding: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+    fontSize: '16px',
+  },
+  textarea: {
+    width: '100%',
+    height: '150px',
+    padding: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+    fontSize: '16px',
+    resize: 'vertical',
+    marginBottom: '20px',
+  },
+  buttonBar: {
+    position: 'absolute',
+    bottom: '0px',
+    right: '20px',
+    display: 'flex',
+    gap: '10px', // Spacing between buttons
+  },
+  button: {
+    padding: '10px 20px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: '#007bff',
+    color: 'white',
+    fontSize: '16px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+  },
+  buttonDisabled: {
+    backgroundColor: '#cccccc',
+    cursor: 'not-allowed',
+  },
+  heading: {
+    textAlign: 'center',
+    marginBottom: '20px',
+  },
+  addButton: {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '10px 20px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: '#28a745',
+    color: 'white',
+    fontSize: '16px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+  },
+
   };
   
 

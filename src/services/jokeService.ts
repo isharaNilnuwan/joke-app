@@ -3,9 +3,9 @@ import { Joke, JokeType } from "@/types/types";
 import { getAuthorizationHeader } from "@/utils/getAuthorizationHeader";
 
 const MODERATE_API_URL =
-  process.env.MODERATE_API_URL || "http://localhost:1008";
-const SUBMIT_API_URL = process.env.SUBMIT_API_URL || "http://localhost:3000";
-const DELIVER_API_URL = process.env.DELIVER_API_URL || "http://localhost:8080";
+  process.env.NEXT_PUBLIC_MODERATE_API_URL || "http://localhost:1008";
+const SUBMIT_API_URL = process.env.NEXT_PUBLIC_SUBMIT_API_URL || "http://localhost:3000";
+const DELIVER_API_URL = process.env.NEXT_PUBLIC_DELIVER_API_URL || "http://localhost:8080";
 
 export const fetchJokes = async (): Promise<any> => {
   try {

@@ -29,7 +29,9 @@ const JokeSubmitter: React.FC = () => {
     });
     if (joke.trim()) {
       setJoke('');
-      setSelectedType(jokeTypes[0] || '');
+      if(jokeTypes) {
+        setSelectedType(jokeTypes[0] || '');
+      }      
 
     }
   };

@@ -4,20 +4,26 @@ import React, { useState, useEffect } from 'react';
 
 const JokeViewer = ({ jokeTypes, jokes }) => {
     //   const [joke, setJoke] = useState<string>('');
-    const [selectedType, setSelectedType] = useState(jokeTypes[0]);
+    const [selectedType, setSelectedType] = useState('');
     const [filteredJokes, setFilteredJokes] = useState([]);
     const [randomJoke, setRandomJoke] = useState(undefined);
 
     useEffect(() => {
-        if (jokeTypes?.length >0 && jokes?.length > 0) {
+        if (jokeTypes?.length > 0 && jokes?.length > 0) {
             const filteredJokes = filterByType(jokeTypes[0].type);
             setFilteredJokes(filteredJokes);
+        }
+
+        if (jokeTypes > 0) {
+            setSelectedType(jokeTypes[0]);
         }
     }, [jokes, jokeTypes])
 
     const handleGetJoke = async () => {
-        const randomJoke = getRandomJoke(jokes);
-        setRandomJoke(randomJoke);
+        if (jokes) {
+            const randomJoke = getRandomJoke(jokes);
+            setRandomJoke(randomJoke);
+        }
     };
 
     const filterByType = (typeToFilter) => {
@@ -42,16 +48,16 @@ const JokeViewer = ({ jokeTypes, jokes }) => {
                 Tell Me a Joke
             </button>
             <div style={boxStyle}>
-            {
-                randomJoke ? (
-                    <div style={jokeDisplayStyle}>
-                        {randomJoke.content}
-                    </div>
-                ) :
-                    (
-                        <div>Want to hear joke?  Click the button</div>
-                    )
-            }
+                {
+                    randomJoke ? (
+                        <div style={jokeDisplayStyle}>
+                            {randomJoke.content}
+                        </div>
+                    ) :
+                        (
+                            <div>Want to hear joke?  Click the button</div>
+                        )
+                }
             </div>
             <div style={boxStyle}>
                 <select

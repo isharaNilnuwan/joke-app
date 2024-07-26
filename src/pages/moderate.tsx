@@ -82,7 +82,7 @@ const ModeratePage: React.FC = () => {
         <p>This is a simple modal pop-up component.</p>
       </Modal>
       <ul>
-        {jokes.map((joke, index) => (
+        {jokes && jokes.map((joke, index) => (
           <JokeEditor
             key={joke._id}
             jokeTypes={jokeTypes}
